@@ -27,8 +27,18 @@
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
         /* Hide the default cursor completely across the whole page to replace with custom cursor */
-        * {
-            cursor: none !important;
+        @media (pointer: fine) {
+            * {
+                cursor: none !important;
+            }
+        }
+
+        /* Hide custom cursor elements on touch devices */
+        @media (pointer: coarse), (hover: none) {
+            #custom-cursor-dot,
+            #custom-cursor-follower {
+                display: none !important;
+            }
         }
 
         body {
@@ -253,6 +263,14 @@
             
             // Interaction targets that trigger the 'magnetic/expanded' cursor state
             const interactables = document.querySelectorAll('.interactive-card, .interactive-btn, .list-group');
+
+            // Fallback for touch devices: disable custom cursor logic entirely
+            const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia("(pointer: coarse)").matches);
+            if (isTouchDevice) {
+                dot.style.display = 'none';
+                follower.style.display = 'none';
+                return;
+            }
 
             // Coordinates
             let mouseX = window.innerWidth / 2;
