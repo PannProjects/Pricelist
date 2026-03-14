@@ -6,207 +6,315 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Software & Hardware Pricelist</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        base: '#e5d9b6',
+                        secondary: '#a4be7b',
+                        primary: '#5f8d4e',
+                        accent: '#285430',
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+        /* Hide the default cursor completely across the whole page to replace with custom cursor */
+        * {
+            cursor: none !important;
+        }
 
         body {
             font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #e5d9b6 0%, #dcd0ac 100%);
         }
 
-        /* Custom Animation for Background Blobs */
-        @keyframes blob {
-            0% {
-                transform: translate(0px, 0px) scale(1);
-            }
-
-            33% {
-                transform: translate(30px, -50px) scale(1.1);
-            }
-
-            66% {
-                transform: translate(-20px, 20px) scale(0.9);
-            }
-
-            100% {
-                transform: translate(0px, 0px) scale(1);
-            }
+        /* 
+         * Custom Cursor Styles 
+         * The dot is small and follows instantly.
+         * The follower is larger and trails behind smoothly.
+         */
+        #custom-cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #285430; /* accent */
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
         }
 
-        .animate-blob {
-            animation: blob 7s infinite;
+        #custom-cursor-follower {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #5f8d4e; /* primary */
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        background-color 0.3s, 
+                        border-color 0.3s;
         }
 
-        .animation-delay-2000 {
-            animation-delay: 2s;
+        /* Hover states for interactive elements (magnetic feel) */
+        .cursor-hover-active #custom-cursor-follower {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(95, 141, 78, 0.15); /* primary with opacity */
+            border-color: rgba(40, 84, 48, 0.4); /* accent with opacity */
         }
 
-        .animation-delay-4000 {
-            animation-delay: 4s;
+        .cursor-hover-active #custom-cursor-dot {
+            background-color: #5f8d4e; /* primary */
+        }
+
+        /* Underline animation for list items */
+        .hover-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .hover-underline::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #5f8d4e;
+            transition: width 0.3s ease;
+        }
+        .list-group:hover .hover-underline::after {
+            width: 100%;
+        }
+
+        /* Smooth reveal animations for page load */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease backwards;
         }
     </style>
 </head>
 
-<body class="bg-slate-900 text-white min-h-screen relative overflow-x-hidden selection:bg-red-500 selection:text-white">
+<body class="text-accent min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-base antialiased">
 
-    <div class="fixed inset-0 w-full h-full overflow-hidden -z-10">
-        <div
-            class="absolute top-0 -left-4 w-72 h-72 bg-red-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob">
-        </div>
-        <div
-            class="absolute top-0 -right-4 w-72 h-72 bg-rose-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000">
-        </div>
-        <div
-            class="absolute -bottom-8 left-20 w-72 h-72 bg-red-800 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000">
-        </div>
-    </div>
+    <!-- Custom Cursor DOM Elements -->
+    <div id="custom-cursor-dot"></div>
+    <div id="custom-cursor-follower"></div>
 
-    <div class="container mx-auto px-4 py-10 max-w-5xl">
+    <div class="container mx-auto px-6 py-16 max-w-6xl">
 
-        <div class="flex flex-col md:flex-row justify-between items-center mb-12 border-b border-gray-700 pb-6">
-            <div class="text-center md:text-left">
-                <h1 class="text-4xl md:text-6xl font-black tracking-tighter text-slate-200">
+        <!-- Header Section -->
+        <header class="mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-accent/20 pb-8 animate-fade-in-up">
+            <div class="text-left">
+                <h1 class="text-5xl md:text-7xl font-black tracking-tight text-accent leading-[1.1]">
                     SOFTWARE <br>
                     HARDWARE
                 </h1>
-                <h2 class="text-4xl md:text-6xl font-black text-red-600 tracking-tighter mt-[-5px]">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-primary tracking-wide mt-2">
                     PRICELIST
                 </h2>
             </div>
-            <!-- <div class="mt-6 md:mt-0">
-                <svg class="w-20 h-20 text-red-600 animate-spin-slow" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                    <path d="m14.5 9-2.5 2.5-2.5-2.5" />
-                    <path d="m14.5 15-2.5-2.5-2.5 2.5" />
-                </svg>
-            </div> -->
-        </div>
+            <div class="mt-8 md:mt-0 pt-2">
+                <span class="inline-block bg-accent/5 text-accent font-semibold text-sm tracking-widest uppercase px-4 py-2 rounded-full border border-accent/10">
+                    Premium Services
+                </span>
+            </div>
+        </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-
-            <div class="relative group">
-                <div
-                    class="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-rose-600 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-500">
+        <!-- Main Content -->
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            
+            <!-- Category 1: Laptop Services -->
+            <div class="interactive-card bg-secondary/20 backdrop-blur-md rounded-[2.5rem] p-8 lg:p-10 border border-secondary/40 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 animate-fade-in-up" style="animation-delay: 0.1s;">
+                <div class="inline-block bg-accent text-base px-6 py-2 rounded-full font-bold text-xs tracking-widest uppercase mb-10 shadow-md">
+                    Laptop Services
                 </div>
-                <div class="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700 rounded-2xl p-6 h-full">
-                    <div
-                        class="absolute -top-4 left-6 bg-gradient-to-r from-gray-700 to-gray-800 px-4 py-1 rounded-full border border-gray-600 shadow-lg">
-                        <span class="font-bold text-sm tracking-wide">Laptop Services</span>
-                    </div>
-
-                    <ul class="space-y-4 mt-4">
-                        <li class="flex justify-between items-center border-b border-gray-800 pb-2">
-                            <span class="text-gray-300 font-medium">Install Ulang Windows</span>
-                            <span
-                                class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tl-lg rounded-br-lg shadow-red-glow">35K</span>
-                        </li>
-                        <li class="flex justify-between items-center border-b border-gray-800 pb-2">
-                            <span class="text-gray-300 font-medium">Optimasi / Custom OS</span>
-                            <span
-                                class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tl-lg rounded-br-lg shadow-red-glow">40K</span>
-                        </li>
-                        <li class="flex justify-between items-center pb-2">
-                            <span class="text-gray-300 font-medium">Install Software/Game</span>
-                            <span
-                                class="bg-red-600 text-white text-[10px] font-bold px-2 py-2 rounded-full leading-tight text-center w-10 h-10 flex items-center justify-center">Start<br>5K</span>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="space-y-7">
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Install Ulang Windows</span>
+                        <span class="font-black text-2xl text-primary">35K</span>
+                    </li>
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Optimasi / Custom OS</span>
+                        <span class="font-black text-2xl text-primary">40K</span>
+                    </li>
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Install Software</span>
+                        <div class="text-right flex flex-col items-end">
+                            <span class="text-[10px] font-bold text-accent/50 uppercase block mb-0.5 tracking-wider">Start From</span>
+                            <span class="font-black text-2xl text-primary leading-none">5K</span>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
-            <div class="relative group">
-                <div
-                    class="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-rose-600 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-500">
+            <!-- Category 2: Oprek Android -->
+            <div class="interactive-card bg-secondary/20 backdrop-blur-md rounded-[2.5rem] p-8 lg:p-10 border border-secondary/40 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="inline-block bg-accent text-base px-6 py-2 rounded-full font-bold text-xs tracking-widest uppercase mb-10 shadow-md">
+                    Oprek Android
                 </div>
-                <div class="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700 rounded-2xl p-6 h-full">
-                    <div
-                        class="absolute -top-4 left-6 bg-gradient-to-r from-gray-700 to-gray-800 px-4 py-1 rounded-full border border-gray-600 shadow-lg">
-                        <span class="font-bold text-sm tracking-wide">Oprek Android</span>
-                    </div>
-
-                    <ul class="space-y-4 mt-4">
-                        <li class="flex justify-between items-center border-b border-gray-800 pb-2">
-                            <span class="text-gray-300 font-medium">Custom ROM + Root</span>
-                            <span
-                                class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tl-lg rounded-br-lg shadow-red-glow">50K</span>
-                        </li>
-                        <li class="flex justify-between items-center border-b border-gray-800 pb-2">
-                            <span class="text-gray-300 font-medium">Flashing (Bootloop)</span>
-                            <span
-                                class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tl-lg rounded-br-lg shadow-red-glow">50K</span>
-                        </li>
-                        <li class="flex justify-between items-center pb-2">
-                            <span class="text-gray-300 font-medium">Install Ulang HP</span>
-                            <span
-                                class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tl-lg rounded-br-lg shadow-red-glow">35K</span>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="space-y-7">
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Custom ROM + Root</span>
+                        <span class="font-black text-2xl text-primary">50K</span>
+                    </li>
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Flashing (Bootloop)</span>
+                        <span class="font-black text-2xl text-primary">50K</span>
+                    </li>
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Install Ulang HP</span>
+                        <span class="font-black text-2xl text-primary">35K</span>
+                    </li>
+                </ul>
             </div>
 
-        </div>
-
-        <div class="relative group mb-12">
-            <div
-                class="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-rose-600 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-500">
-            </div>
-            <div class="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700 rounded-2xl p-6">
-                <div
-                    class="absolute -top-4 left-6 bg-gradient-to-r from-gray-700 to-gray-800 px-4 py-1 rounded-full border border-gray-600 shadow-lg">
-                    <span class="font-bold text-sm tracking-wide uppercase">Hardware</span>
+            <!-- Category 3: Hardware -->
+            <div class="interactive-card bg-secondary/20 backdrop-blur-md rounded-[2.5rem] p-8 lg:p-10 border border-secondary/40 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 md:col-span-2 lg:col-span-1 animate-fade-in-up" style="animation-delay: 0.3s;">
+                <div class="inline-block bg-accent text-base px-6 py-2 rounded-full font-bold text-xs tracking-widest uppercase mb-10 shadow-md">
+                    Hardware
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 mt-4">
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center border-b border-gray-800 pb-2">
-                            <span class="text-gray-300 font-medium">Ganti LCD</span>
-                            <span
-                                class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tl-lg rounded-br-lg shadow-red-glow">25K</span>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-gray-800 pb-2 md:border-none">
-                            <span class="text-gray-300 font-medium">Ganti Baterai</span>
-                            <span
-                                class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tl-lg rounded-br-lg shadow-red-glow">15K</span>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center border-b border-gray-800 pb-2">
-                            <span class="text-gray-300 font-medium">Lem LCD</span>
-                            <span
-                                class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tl-lg rounded-br-lg shadow-red-glow">20K</span>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-gray-800 pb-2 md:border-none">
-                            <span class="text-gray-300 font-medium">Servis Tombol / FP</span>
-                            <span
-                                class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tl-lg rounded-br-lg shadow-red-glow">15K</span>
-                        </div>
-                    </div>
-                </div>
+                <ul class="space-y-7">
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Ganti LCD</span>
+                        <span class="font-black text-2xl text-primary">25K</span>
+                    </li>
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Ganti Baterai</span>
+                        <span class="font-black text-2xl text-primary">15K</span>
+                    </li>
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Lem LCD</span>
+                        <span class="font-black text-2xl text-primary">20K</span>
+                    </li>
+                    <li class="flex justify-between items-center list-group">
+                        <span class="font-semibold text-lg hover-underline hover:text-primary transition-colors text-accent/90">Servis Tombol / FP</span>
+                        <span class="font-black text-2xl text-primary">15K</span>
+                    </li>
+                </ul>
             </div>
-        </div>
+            
+        </main>
 
-        <div class="text-center space-y-4 mt-16 relative">
-            <h3 class="text-2xl font-black uppercase tracking-widest text-white">Buka Tiap Hari</h3>
-
-            <div class="w-24 h-1 bg-red-600 mx-auto rounded-full"></div>
-
-            <p class="text-3xl font-bold italic text-slate-300 animate-pulse">BERGARANSI!!</p>
-
-            <div class="pt-4">
-                <a href="https://wa.me/62895384661641"
-                    class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-868-2.031-967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+        <!-- Footer / Contact -->
+        <footer class="mt-24 mb-10 flex flex-col items-center justify-center space-y-6 animate-fade-in-up" style="animation-delay: 0.4s;">
+            <div class="flex flex-col items-center">
+                <h3 class="text-xl font-bold tracking-widest text-accent uppercase mb-3">Buka Tiap Hari</h3>
+                <div class="w-16 h-1.5 bg-primary rounded-full"></div>
+            </div>
+            
+            <p class="text-2xl font-black italic text-primary/80 tracking-wide mt-2">BERGARANSI!!</p>
+            
+            <div class="pt-6">
+                <!-- interactive-btn used for cursor targeting -->
+                <a href="https://wa.me/62895384661641" class="interactive-btn group relative inline-flex items-center justify-center gap-3 bg-accent text-base font-bold py-4 px-10 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-accent/30 focus:outline-none">
+                    <!-- Hover background fill effect -->
+                    <div class="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></div>
+                    
+                    <svg class="w-6 h-6 relative z-10 transition-transform duration-300 group-hover:-rotate-12" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-868-2.031-967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
                     </svg>
-                    0895384661641
+                    <span class="relative z-10 text-lg tracking-wide">0895384661641</span>
                 </a>
             </div>
-        </div>
+        </footer>
 
     </div>
 
+    <!-- Custom Cursor Logic -->
+    <script>
+        /**
+         * Custom Sophisticated Cursor
+         * Uses requestAnimationFrame for a buttery smooth 60fps+ trailing effect.
+         * Physics: linear interpolation (lerp) creates a spring/magnetic feel without lag.
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const dot = document.getElementById('custom-cursor-dot');
+            const follower = document.getElementById('custom-cursor-follower');
+            
+            // Interaction targets that trigger the 'magnetic/expanded' cursor state
+            const interactables = document.querySelectorAll('.interactive-card, .interactive-btn, .list-group');
+
+            // Coordinates
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let dotX = mouseX;
+            let dotY = mouseY;
+            let followerX = mouseX;
+            let followerY = mouseY;
+
+            // Track mouse movement
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            // Smooth animation loop
+            function renderCursor() {
+                // Lerp (Linear Interpolation) factors
+                // Higher value = faster/stiffer. Lower = smoother/trailing.
+                const dotSpeed = 1; // Instant follow for the exact dot
+                const followerSpeed = 0.15; // Smooth trailing delay for the border
+
+                // Calculate next positions
+                dotX += (mouseX - dotX) * dotSpeed;
+                dotY += (mouseY - dotY) * dotSpeed;
+                
+                followerX += (mouseX - followerX) * followerSpeed;
+                followerY += (mouseY - followerY) * followerSpeed;
+
+                // Apply transforms natively for max performance
+                dot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
+                follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0) translate(-50%, -50%)`;
+
+                requestAnimationFrame(renderCursor);
+            }
+            
+            // Start the animation loop
+            requestAnimationFrame(renderCursor);
+
+            // Add hover event listeners for expanding the cursor (magnetic feel)
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    document.body.classList.add('cursor-hover-active');
+                });
+                el.addEventListener('mouseleave', () => {
+                    document.body.classList.remove('cursor-hover-active');
+                });
+            });
+
+            // Handle cursor leaving the window
+            document.addEventListener('mouseout', (e) => {
+                if(e.relatedTarget === null) {
+                    dot.style.opacity = 0;
+                    follower.style.opacity = 0;
+                }
+            });
+            document.addEventListener('mouseover', () => {
+                dot.style.opacity = 1;
+                follower.style.opacity = 1;
+            });
+        });
+    </script>
 </body>
 
 </html>
