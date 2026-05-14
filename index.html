@@ -1,1325 +1,815 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LutzzServis — Software & Hardware Pricelist</title>
-    <meta name="description"
-        content="Jasa install ulang Windows, custom ROM Android, ganti LCD, baterai & servis hardware lainnya. Harga terjangkau, garansi 1/2 bulan. Buka tiap hari.">
-    <meta name="keywords"
-        content="servis laptop, install ulang, custom ROM, ganti LCD, ganti baterai, servis HP, LutzzServis">
+    <!-- [ignoring loop detection] -->
+    <meta name="description" content="Jasa install ulang Windows, custom ROM Android, ganti LCD, baterai & servis hardware lainnya. Harga terjangkau, garansi 1/2 bulan. Buka tiap hari.">
+    <meta name="keywords" content="servis laptop, install ulang, custom ROM, ganti LCD, ganti baterai, servis HP, LutzzServis">
     <meta property="og:title" content="LutzzServis — Software & Hardware Pricelist">
-    <meta property="og:description"
-        content="Jasa servis laptop & HP terjangkau. Install ulang, custom ROM, ganti LCD, dan lainnya. Garansi 1/2 bulan.">
+    <meta property="og:description" content="Jasa servis laptop & HP terjangkau. Install ulang, custom ROM, ganti LCD, dan lainnya. Garansi 1/2 bulan.">
     <meta property="og:type" content="website">
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+
+    <!-- JetBrains Mono Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
-        /* ============================
-           CSS VARIABLES / PALETTE
-           ============================ */
         :root {
-            --base: #e5d9b6;
-            --base-dark: #dcd0ac;
-            --secondary: #a4be7b;
-            --primary: #5f8d4e;
-            --accent: #285430;
+            /* Colors */
+            --colors-canvas: #fdfcfc;
+            --colors-ink: #201d1d;
+            --colors-ink-deep: #0f0000;
+            --colors-surface-soft: #f8f7f7;
+            --colors-surface-card: #f1eeee;
+            --colors-surface-dark: #201d1d;
+            --colors-surface-dark-elevated: #302c2c;
+            --colors-hairline: rgba(15,0,0,0.12);
+            --colors-hairline-strong: #646262;
+            --colors-charcoal: #302c2c;
+            --colors-body: #424245;
+            --colors-mute: #646262;
+            --colors-stone: #6e6e73;
+            --colors-ash: #9a9898;
+            --colors-accent: #007aff;
+            --colors-danger: #ff3b30;
+            --colors-warning: #ff9f0a;
+            --colors-success: #30d158;
+
+            /* Typography */
+            --font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+            
+            /* Spacing */
+            --spacing-xxs: 1px;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 12px;
+            --spacing-lg: 16px;
+            --spacing-xl: 24px;
+            --spacing-xxl: 32px;
+            --spacing-section: 96px;
+
+            /* Shapes */
+            --rounded-none: 0px;
+            --rounded-sm: 4px;
+            --rounded-full: 9999px;
         }
 
-        /* ============================
-           RESET & BASE
-           ============================ */
-        *,
-        *::before,
-        *::after {
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--colors-canvas);
+            color: var(--colors-body);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
+        *, *::before, *::after {
+            box-sizing: inherit;
+            margin: 0;
+            padding: 0;
         }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--base);
-            color: var(--accent);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
-        ::selection {
-            background: var(--primary);
-            color: var(--base);
+        /* Typography Utilities */
+        .display-xl { font-size: 38px; font-weight: 700; line-height: 1.5; color: var(--colors-ink); }
+        .heading-md { font-size: 16px; font-weight: 700; line-height: 1.5; color: var(--colors-ink); }
+        .body-md { font-size: 16px; font-weight: 400; line-height: 1.5; }
+        .body-strong { font-size: 16px; font-weight: 500; line-height: 1.5; color: var(--colors-ink); }
+        .button-md { font-size: 16px; font-weight: 500; line-height: 2; }
+        .caption-md { font-size: 14px; font-weight: 400; line-height: 2; }
+
+        /* Container */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-xl);
         }
 
-        /* ============================
-           CUSTOM CURSOR
-           ============================ */
-        @media (pointer: fine) {
-            * {
-                cursor: none !important;
-            }
-        }
-
-        @media (pointer: coarse),
-        (hover: none) {
-
-            #cursor-dot,
-            #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        #cursor-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            position: fixed;
-            top: 0;
-            left: 0;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10001;
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease, background 0.2s;
-        }
-
-        #cursor-ring {
-            width: 36px;
-            height: 36px;
-            border: 2px solid var(--primary);
-            position: fixed;
-            top: 0;
-            left: 0;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transform: translate(-50%, -50%);
-            transition: width 0.35s cubic-bezier(.175, .885, .32, 1.275),
-                height 0.35s cubic-bezier(.175, .885, .32, 1.275),
-                background 0.3s, border-color 0.3s, opacity 0.25s;
-        }
-
-        body.cursor-active #cursor-ring {
-            width: 56px;
+        /* Navigation */
+        .primary-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             height: 56px;
-            background: rgba(95, 141, 78, 0.12);
-            border-color: rgba(40, 84, 48, 0.35);
-        }
-
-        body.cursor-active #cursor-dot {
-            transform: translate(-50%, -50%) scale(1.6);
-            background: var(--primary);
-        }
-
-        /* ============================
-           HERO SECTION
-           ============================ */
-        .hero {
+            border-bottom: 1px solid var(--colors-hairline);
+            border-radius: var(--rounded-none);
+            background: var(--colors-canvas);
+            margin-bottom: var(--spacing-section);
             position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 20% 80%, rgba(164, 190, 123, 0.35) 0%, transparent 60%),
-                radial-gradient(ellipse 70% 50% at 85% 20%, rgba(95, 141, 78, 0.2) 0%, transparent 55%);
-            z-index: 0;
-        }
-
-        /* Decorative floating shapes */
-        .hero-shape {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.08;
-            z-index: 0;
-        }
-
-        .hero-shape--1 {
-            width: 400px;
-            height: 400px;
-            background: var(--primary);
-            top: -80px;
-            right: -100px;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .hero-shape--2 {
-            width: 250px;
-            height: 250px;
-            background: var(--secondary);
-            bottom: -60px;
-            left: -80px;
-            animation: float 10s ease-in-out infinite reverse;
-        }
-
-        .hero-shape--3 {
-            width: 150px;
-            height: 150px;
-            background: var(--accent);
-            top: 30%;
-            left: 10%;
-            animation: float 12s ease-in-out infinite 2s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-30px) rotate(5deg);
-            }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--base);
-            font-size: 0.65rem;
+        .wordmark {
             font-weight: 700;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            padding: 0.5rem 1.6rem;
-            border-radius: 100px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(40, 84, 48, 0.2);
-            animation: slideDown 0.8s ease backwards;
-        }
-
-        .hero-title {
-            font-size: clamp(2.8rem, 8vw, 7rem);
-            font-weight: 900;
+            color: var(--colors-ink);
+            white-space: pre;
             line-height: 1;
-            letter-spacing: -0.03em;
-            color: var(--accent);
-            animation: slideUp 0.8s ease backwards 0.15s;
         }
 
-        .hero-title span {
-            display: block;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            font-weight: 500;
-            color: var(--accent);
-            opacity: 0.6;
-            margin-top: 1.5rem;
-            letter-spacing: 0.1em;
-            animation: slideUp 0.8s ease backwards 0.3s;
-        }
-
-        .hero-cta-group {
+        .nav-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 2.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            animation: slideUp 0.8s ease backwards 0.4s;
-        }
-
-        .hero-cta {
-            display: inline-flex;
+            gap: var(--spacing-xl);
             align-items: center;
-            gap: 0.5rem;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            padding: 0.9rem 2rem;
-            border-radius: 100px;
-            text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .hero-cta--primary {
-            background: var(--accent);
-            color: var(--base);
-            box-shadow: 0 6px 25px rgba(40, 84, 48, 0.25);
+        .nav-links a, .nav-links button {
+            color: var(--colors-ink);
+            transition: opacity 0.2s;
+        }
+        
+        .nav-links a:hover, .nav-links button:hover {
+            opacity: 0.7;
         }
 
-        .hero-cta--primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 35px rgba(40, 84, 48, 0.35);
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--colors-ink);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
         }
 
-        .hero-cta--ghost {
+        .lang-btn {
+            background: none;
+            border: none;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--colors-ink);
+            color: var(--colors-canvas) !important;
+            padding: 4px 20px;
+            border-radius: var(--rounded-sm);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary:hover, .btn-primary:active {
+            background-color: var(--colors-ink-deep);
+        }
+
+        .btn-secondary {
+            background-color: var(--colors-canvas);
+            color: var(--colors-ink) !important;
+            padding: 4px 20px;
+            border-radius: var(--rounded-sm);
+            border: 1px solid var(--colors-hairline-strong);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--colors-surface-soft);
+        }
+
+        /* Tabs */
+        .tab-strip {
+            display: flex;
+            gap: 8px;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--colors-hairline-strong);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .tab-strip::-webkit-scrollbar { display: none; }
+
+        .button-tab {
             background: transparent;
-            color: var(--accent);
-            box-shadow: inset 0 0 0 2px rgba(40, 84, 48, 0.3);
-        }
-
-        .hero-cta--ghost:hover {
-            box-shadow: inset 0 0 0 2px var(--accent);
-            transform: translateY(-3px);
-        }
-
-        .hero-scroll {
-            position: absolute;
-            bottom: 2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent);
-            opacity: 0.4;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            animation: slideUp 0.8s ease backwards 0.5s;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-
-        .hero-scroll:hover {
-            opacity: 0.8;
-        }
-
-        .hero-scroll .arrow {
-            width: 20px;
-            height: 20px;
-            border-right: 2px solid var(--accent);
-            border-bottom: 2px solid var(--accent);
-            transform: rotate(45deg);
-            animation: bounce 2s ease infinite;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: rotate(45deg) translateY(0);
-            }
-
-            50% {
-                transform: rotate(45deg) translateY(6px);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ============================
-           SIDE NAV (DESKTOP)
-           ============================ */
-        .side-nav {
-            position: fixed;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 9000;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-            align-items: flex-end;
-        }
-
-        .side-nav a {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--accent);
-            opacity: 0.35;
-            transition: opacity 0.3s, transform 0.3s;
-        }
-
-        .side-nav a:hover,
-        .side-nav a.active {
-            opacity: 1;
-            transform: translateX(-4px);
-        }
-
-        .side-nav .nav-label {
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            opacity: 0;
-            transform: translateX(8px);
-            transition: opacity 0.3s, transform 0.3s;
+            color: var(--colors-mute);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border: none;
+            border-bottom: 2px solid transparent;
+            border-radius: var(--rounded-none);
+            cursor: pointer;
+            line-height: 2;
             white-space: nowrap;
         }
 
-        .side-nav a:hover .nav-label,
-        .side-nav a.active .nav-label {
-            opacity: 1;
-            transform: translateX(0);
+        .button-tab.active {
+            color: var(--colors-ink);
+            border-bottom-color: var(--colors-ash);
         }
 
-        .side-nav .nav-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            background: transparent;
-            transition: background 0.3s, transform 0.3s;
-            flex-shrink: 0;
+        /* Sections */
+        section {
+            margin-bottom: var(--spacing-section);
+            padding-bottom: var(--spacing-section);
+            border-bottom: 1px solid var(--colors-hairline);
         }
 
-        .side-nav a:hover .nav-dot,
-        .side-nav a.active .nav-dot {
-            background: var(--primary);
-            border-color: var(--primary);
-            transform: scale(1.3);
+        section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
 
-        @media (max-width: 768px) {
-            .side-nav {
-                display: none;
-            }
+        .section-content {
+            padding: var(--spacing-lg) 0;
         }
 
-        /* ============================
-           SECTION STYLES
-           ============================ */
-        .section {
-            padding: 6rem 1.5rem;
-        }
-
-        .section-inner {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            margin-bottom: 3.5rem;
+        /* Hero */
+        .hero-wrapper {
+            background-color: var(--colors-surface-dark);
+            width: 100vw;
             position: relative;
-        }
-
-        .section-number {
-            font-size: clamp(4rem, 10vw, 7rem);
-            font-weight: 900;
-            color: var(--secondary);
-            opacity: 0.15;
-            line-height: 1;
-            position: absolute;
-            top: -2rem;
-            left: -0.5rem;
-            user-select: none;
-            pointer-events: none;
-        }
-
-        .section-tag {
-            display: inline-block;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--primary);
-            background: rgba(95, 141, 78, 0.1);
-            padding: 0.4rem 1.2rem;
-            border-radius: 100px;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1.2;
-            position: relative;
-        }
-
-        /* ============================
-           SERVICE LIST - TABLE STYLE
-           ============================ */
-        .service-list {
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
             display: flex;
-            flex-direction: column;
-            gap: 0;
+            justify-content: center;
+            margin-bottom: var(--spacing-section);
         }
 
-        .service-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(40, 84, 48, 0.1);
-            position: relative;
-            transition: padding-left 0.4s cubic-bezier(.25, .8, .25, 1);
-        }
-
-        .service-item:first-child {
-            border-top: 1px solid rgba(40, 84, 48, 0.1);
-        }
-
-        .service-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 0;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(164, 190, 123, 0.15), transparent);
-            transition: width 0.5s cubic-bezier(.25, .8, .25, 1);
-            z-index: 0;
-        }
-
-        .service-item:hover {
-            padding-left: 1.5rem;
-        }
-
-        .service-item:hover::before {
+        .hero-tui-mockup {
+            color: var(--colors-canvas);
+            padding: 64px 32px;
+            border-radius: var(--rounded-none);
             width: 100%;
-        }
-
-        .service-name {
-            font-size: clamp(1rem, 2vw, 1.15rem);
-            font-weight: 600;
-            color: var(--accent);
-            opacity: 0.85;
-            position: relative;
-            z-index: 1;
-            transition: opacity 0.3s;
-        }
-
-        .service-item:hover .service-name {
-            opacity: 1;
-        }
-
-        .service-price-wrapper {
-            position: relative;
-            z-index: 1;
+            max-width: 1100px;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: center;
         }
 
-        .service-price-label {
-            font-size: 0.55rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--base);
-            background: var(--primary);
-            padding: 0.15rem 0.5rem;
-            border-radius: 100px;
-            margin-bottom: 0.3rem;
+        .hero-title-container {
+            width: 100%;
+            overflow-x: auto;
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+            scrollbar-width: none; /* Firefox */
+        }
+        .hero-title-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .hero-title {
+            color: var(--colors-canvas);
+            font-size: clamp(8px, 1.6vw, 24px);
+            line-height: 1.2;
+            display: inline-block;
+            text-align: left;
+            white-space: pre;
+        }
+
+        .hero-subtitle {
+            text-align: center;
+            color: var(--colors-ash);
+            max-width: 600px;
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .tui-prompt-row {
+            background-color: var(--colors-surface-dark-elevated);
+            color: var(--colors-canvas);
+            padding: 8px 12px;
+            border-radius: var(--rounded-sm);
+            margin-bottom: var(--spacing-xxl);
             display: inline-block;
         }
-
-        .service-price {
-            font-size: clamp(1.3rem, 3vw, 1.7rem);
-            font-weight: 900;
-            color: var(--primary);
-            letter-spacing: -0.02em;
-            transition: transform 0.3s ease, color 0.3s;
+        
+        .tui-prompt-row span {
+            color: var(--colors-success);
         }
 
-        .service-item:hover .service-price {
-            transform: scale(1.08);
-            color: var(--accent);
-        }
-
-        .section-note {
-            margin-top: 2.5rem;
-            padding: 1.25rem 1.5rem;
-            background: rgba(95, 141, 78, 0.08);
-            border-left: 4px solid var(--primary);
-            border-radius: 0 1rem 1rem 0;
-            font-size: 0.9rem;
-            color: var(--accent);
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        .section-note strong {
-            color: var(--primary);
-            font-weight: 800;
-        }
-
-        /* ============================
-           ALTERNATING SECTION BG 
-           ============================ */
-        .section--alt {
-            background: linear-gradient(135deg, rgba(164, 190, 123, 0.12) 0%, rgba(229, 217, 182, 0) 70%);
-        }
-
-        /* ============================
-           FOOTER / CONTACT
-           ============================ */
-        .footer {
-            padding: 5rem 1.5rem 3rem;
+        .tui-keybindings {
+            color: var(--colors-ash);
+            margin-top: auto;
             text-align: center;
         }
 
-        .footer-inner {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .footer-guarantee {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            background: rgba(40, 84, 48, 0.06);
-            border: 1px solid rgba(40, 84, 48, 0.1);
-            border-radius: 100px;
-            padding: 0.6rem 1.6rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-guarantee .icon {
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
+        /* List Rows (Services) */
+        .list-row {
+            padding: var(--spacing-sm) 0;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            align-items: flex-start;
         }
-
-        .footer-guarantee .icon svg {
-            width: 12px;
-            height: 12px;
-            fill: var(--base);
-        }
-
-        .footer-guarantee span {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .footer-heading {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1.2;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-sub {
-            font-size: 0.9rem;
-            color: var(--accent);
-            opacity: 0.5;
-            font-weight: 500;
-            margin-bottom: 2.5rem;
-        }
-
-        .cta-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: var(--accent);
-            color: var(--base);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            padding: 1.1rem 2.5rem;
-            border-radius: 100px;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 8px 30px rgba(40, 84, 48, 0.2);
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 40px rgba(40, 84, 48, 0.3);
-        }
-
-        .cta-btn .btn-bg {
-            position: absolute;
-            inset: 0;
-            background: var(--primary);
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(.25, .8, .25, 1);
-            z-index: 0;
-        }
-
-        .cta-btn:hover .btn-bg {
-            transform: translateY(0);
-        }
-
-        .cta-btn svg,
-        .cta-btn span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-btn svg {
-            width: 22px;
-            height: 22px;
-            fill: currentColor;
-            transition: transform 0.3s;
-        }
-
-        .cta-btn:hover svg {
-            transform: rotate(-12deg) scale(1.1);
-        }
-
-        .footer-hours {
-            margin-top: 2.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--accent);
-            opacity: 0.4;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .footer-bottom {
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(40, 84, 48, 0.08);
-            font-size: 0.7rem;
-            color: var(--accent);
-            opacity: 0.25;
-            font-weight: 500;
-        }
-
-        /* CTA Button Group */
-        .cta-group {
+        
+        .list-row-inner {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .cta-btn--outline {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: transparent;
-            color: var(--accent);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            padding: 1.1rem 2.5rem;
-            border-radius: 100px;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s, color 0.3s;
-            box-shadow: inset 0 0 0 2px var(--accent);
-        }
-
-        .cta-btn--outline:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: inset 0 0 0 2px var(--primary), 0 12px 40px rgba(40, 84, 48, 0.15);
-            color: var(--base);
-        }
-
-        .cta-btn--outline .btn-bg {
-            position: absolute;
-            inset: 0;
-            background: var(--accent);
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(.25, .8, .25, 1);
-            z-index: 0;
-        }
-
-        .cta-btn--outline:hover .btn-bg {
-            transform: translateY(0);
-        }
-
-        .cta-btn--outline svg,
-        .cta-btn--outline span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-btn--outline svg {
-            width: 22px;
-            height: 22px;
-            fill: currentColor;
-            transition: transform 0.3s;
-        }
-
-        .cta-btn--outline:hover svg {
-            transform: scale(1.1);
-        }
-
-        /* ============================
-           LOCATION SECTION
-           ============================ */
-        .location-card {
-            max-width: 900px;
-            margin: 0 auto;
-            background: rgba(40, 84, 48, 0.04);
-            border: 1px solid rgba(40, 84, 48, 0.1);
-            border-radius: 1.5rem;
-            overflow: hidden;
-        }
-
-        .location-map {
+            justify-content: space-between;
             width: 100%;
-            height: 300px;
-            position: relative;
-            overflow: hidden;
-            background: rgba(40, 84, 48, 0.06);
+            max-width: 600px;
         }
 
-        .location-map iframe {
+        .list-row-marker {
+            color: var(--colors-body);
+            margin-right: var(--spacing-sm);
+            white-space: pre;
+        }
+
+        .list-row-title {
+            color: var(--colors-ink);
+            flex-grow: 1;
+        }
+
+        .list-row-price {
+            color: var(--colors-ink);
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .service-category {
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .service-category-title {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .service-note {
+            background-color: var(--colors-surface-soft);
+            padding: 16px 20px;
+            border-radius: var(--rounded-sm);
+            margin-top: var(--spacing-md);
+            max-width: 600px;
+        }
+        
+        /* Location */
+        .map-container {
+            width: 100%;
+            height: 350px;
+            border-radius: var(--rounded-none);
+            overflow: hidden;
+            margin-top: var(--spacing-lg);
+            border: 1px solid var(--colors-hairline);
+        }
+
+        .map-container iframe {
             width: 100%;
             height: 100%;
             border: 0;
-            display: block;
-            filter: saturate(0.8) contrast(1.05);
-            transition: filter 0.4s;
+            filter: grayscale(100%) contrast(120%);
         }
 
-        .location-card:hover .location-map iframe {
-            filter: saturate(1) contrast(1);
+        /* Footer */
+        .footer-section {
+            padding: var(--spacing-xxl) 0;
+            border-top: 1px solid var(--colors-hairline);
+            margin-top: var(--spacing-section);
+            color: var(--colors-mute);
         }
 
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
 
+        .footer-grid > a {
+            border-right: 1px solid var(--colors-hairline);
+            padding: 8px 0;
+        }
 
-        .location-info {
-            padding: 2rem 2.5rem;
+        .footer-grid > a:last-child {
+            border-right: none;
+        }
+
+        .footer-bottom {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .location-text h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 0.3rem;
-        }
-
-        .location-text p {
-            font-size: 0.8rem;
-            color: var(--accent);
-            opacity: 0.5;
-            font-weight: 500;
-        }
-
-        .location-btn {
-            display: inline-flex;
+            padding-top: var(--spacing-lg);
             align-items: center;
-            gap: 0.6rem;
-            background: var(--primary);
-            color: var(--base);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 0.8rem 1.8rem;
-            border-radius: 100px;
-            text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-            box-shadow: 0 4px 15px rgba(95, 141, 78, 0.2);
-            flex-shrink: 0;
         }
 
-        .location-btn:hover {
-            background: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(40, 84, 48, 0.25);
+        .footer-bottom-links {
+            display: flex;
+            gap: var(--spacing-lg);
         }
 
-        .location-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
+        .link-inline {
+            color: var(--colors-ink);
+            text-decoration: underline;
         }
 
-        @media (max-width: 640px) {
-            .location-info {
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 56px;
+                left: 0;
+                right: 0;
+                background: var(--colors-canvas);
                 flex-direction: column;
-                text-align: center;
-                padding: 1.5rem;
+                padding: var(--spacing-xl);
+                border-bottom: 1px solid var(--colors-hairline);
+                z-index: 10;
             }
-
-            .location-map {
-                height: 220px;
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .hero-tui-mockup {
+                padding: 48px 16px;
+            }
+            .hero-title {
+                font-size: 20px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-grid > a:nth-child(even) {
+                border-right: none;
+            }
+            .footer-grid > a {
+                border-bottom: 1px solid var(--colors-hairline);
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                align-items: flex-start;
+            }
+            .footer-bottom-links {
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-sm);
             }
         }
-
-        /* ============================
-           REVEAL ON SCROLL
-           ============================ */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* stagger children */
-        .reveal-stagger .service-item {
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .reveal-stagger.revealed .service-item {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .reveal-stagger.revealed .service-item:nth-child(1) {
-            transition-delay: 0.05s;
-        }
-
-        .reveal-stagger.revealed .service-item:nth-child(2) {
-            transition-delay: 0.12s;
-        }
-
-        .reveal-stagger.revealed .service-item:nth-child(3) {
-            transition-delay: 0.19s;
-        }
-
-        .reveal-stagger.revealed .service-item:nth-child(4) {
-            transition-delay: 0.26s;
-        }
-
-        /* ============================
-           RESPONSIVE
-           ============================ */
         @media (max-width: 640px) {
-            .section {
-                padding: 4rem 1.25rem;
+            .footer-grid {
+                grid-template-columns: 1fr;
             }
-
-            .section-number {
-                font-size: 3.5rem;
-                top: -1.2rem;
-            }
-
-            .service-item {
-                padding: 1.2rem 0;
+            .footer-grid > a {
+                border-right: none;
             }
         }
     </style>
 </head>
-
 <body>
-
-    <!-- Custom Cursor -->
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
-
-    <!-- Side Navigation -->
-    <nav class="side-nav" id="sideNav">
-        <a href="#hero" data-section="hero" class="active interactive-el" aria-label="Ke bagian Home">
-            <span class="nav-label">Home</span>
-            <span class="nav-dot"></span>
-        </a>
-        <a href="#laptop" data-section="laptop" class="interactive-el" aria-label="Ke bagian Laptop Services">
-            <span class="nav-label">Laptop</span>
-            <span class="nav-dot"></span>
-        </a>
-        <a href="#android" data-section="android" class="interactive-el" aria-label="Ke bagian Oprek Android">
-            <span class="nav-label">Android</span>
-            <span class="nav-dot"></span>
-        </a>
-        <a href="#hardware" data-section="hardware" class="interactive-el" aria-label="Ke bagian Hardware">
-            <span class="nav-label">Hardware</span>
-            <span class="nav-dot"></span>
-        </a>
-        <a href="#webdev" data-section="webdev" class="interactive-el" aria-label="Ke bagian Web Dev">
-            <span class="nav-label">Web Dev</span>
-            <span class="nav-dot"></span>
-        </a>
-        <a href="#location" data-section="location" class="interactive-el" aria-label="Ke bagian Lokasi">
-            <span class="nav-label">Lokasi</span>
-            <span class="nav-dot"></span>
-        </a>
-        <a href="#contact" data-section="contact" class="interactive-el" aria-label="Ke bagian Contact">
-            <span class="nav-label">Contact</span>
-            <span class="nav-dot"></span>
-        </a>
-    </nav>
-
-    <!-- ============================
-         HERO SECTION
-         ============================ -->
-    <section class="hero" id="hero">
-        <div class="hero-shape hero-shape--1"></div>
-        <div class="hero-shape hero-shape--2"></div>
-        <div class="hero-shape hero-shape--3"></div>
-
-        <div class="hero-content">
-            <div class="hero-badge">Premium Services</div>
-            <h1 class="hero-title">
-                SOFTWARE
-                <span>&</span>
-                HARDWARE
-            </h1>
-            <p class="hero-subtitle">Pricelist &mdash; Layanan & Jasa Terbaru</p>
-            <div class="hero-cta-group">
-                <a href="#laptop" class="hero-cta hero-cta--primary interactive-el"
-                    aria-label="Lihat daftar harga layanan">Lihat Harga</a>
-                <a href="https://wa.me/62895384661641" class="hero-cta hero-cta--ghost interactive-el"
-                    aria-label="Hubungi kami via WhatsApp">Hubungi Kami</a>
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="primary-nav">
+            <a href="#hero" class="wordmark">LUTZZSERVIS</a>
+            <div class="nav-links">
+                <a href="#hero" class="body-strong" data-i18n="nav_home">Beranda</a>
+                <a href="#services" class="body-strong" data-i18n="nav_services">Layanan</a>
+                <a href="#location" class="body-strong" data-i18n="nav_location">Lokasi</a>
+                <a href="#contact" class="body-strong" data-i18n="nav_contact">Kontak</a>
+                <a href="https://wa.me/62895384661641" class="btn-primary button-md" data-i18n="nav_call">Hubungi</a>
+                <button class="lang-btn body-strong" id="nav-lang-toggle" onclick="toggleLanguage()">EN</button>
             </div>
-        </div>
+            <button class="mobile-menu-btn body-strong" aria-label="Toggle Menu" id="mobile-menu-btn">[ Menu ]</button>
+        </nav>
 
-        <a href="#laptop" class="hero-scroll interactive-el">
-            <span>Scroll</span>
-            <div class="arrow"></div>
-        </a>
-    </section>
-
-    <!-- ============================
-         SECTION 1: LAPTOP SERVICES
-         ============================ -->
-    <section class="section" id="laptop">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-number">01</div>
-                <div class="section-tag">Services</div>
-                <h2 class="section-title">Laptop Services</h2>
-            </div>
-
-            <div class="service-list reveal reveal-stagger">
-                <div class="service-item interactive-el">
-                    <span class="service-name">Install Ulang Windows</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price">40K</span>
-                    </div>
+        <!-- Hero TUI Mockup -->
+        <div class="hero-wrapper">
+            <div id="hero" class="hero-tui-mockup">
+                <div class="hero-title-container">
+                    <h1 class="hero-title display-xl">
+_     _   _ _____ __________ ____  _____ ______     _____ ____  
+| |   | | | |_   _|__  /__  // ___|| ____|  _ \ \   / /_ _/ ___| 
+| |   | | | | | |   / /  / / \___ \|  _| | |_) \ \ / / | |\___ \ 
+| |___| |_| | | |  / /_ / /_  ___) | |___|  _ < \ V /  | | ___) |
+|_____|\___/  |_| /____/____||____/|_____|_| \_\ \_/  |___|____/ 
+                    </h1>
                 </div>
-                <div class="service-item interactive-el">
-                    <span class="service-name">Optimisasi / Custom OS</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price">40K</span>
-                    </div>
+                <p class="hero-subtitle body-md" data-i18n="hero_subtitle">
+                    Melayani Servis Laptop, Oprek Android, Perbaikan Perangkat Keras & Pembuatan Website dengan Kualitas Terbaik.
+                </p>
+                <div class="tui-prompt-row body-md">
+                    &gt;&gt;&gt; print("<span data-i18n="hero_cmd">Selamat datang di LutzzServis</span>")
                 </div>
-                <div class="service-item interactive-el">
-                    <span class="service-name">Install Software</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price-label">Start From</span>
-                        <span class="service-price">5K</span>
-                    </div>
+                <div class="hero-actions" style="display: flex; gap: 12px; margin-bottom: 32px;">
+                    <a href="#services" class="btn-secondary button-md" style="background: transparent; color: var(--colors-canvas) !important; border-color: var(--colors-canvas);" data-i18n="btn_price">[ Harga ]</a>
+                    <a href="https://wa.me/62895384661641" class="btn-primary button-md" style="background: var(--colors-canvas); color: var(--colors-ink) !important;" data-i18n="btn_wa">[ WA ]</a>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- ============================
-         SECTION 2: OPREK ANDROID
-         ============================ -->
-    <section class="section section--alt" id="android">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-number">02</div>
-                <div class="section-tag">Mobile</div>
-                <h2 class="section-title">Oprek Android</h2>
-            </div>
-
-            <div class="service-list reveal reveal-stagger">
-                <div class="service-item interactive-el">
-                    <span class="service-name">Custom ROM + Root</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price">50K</span>
+        <!-- Services -->
+        <section id="services">
+            <h2 class="heading-md" style="margin-bottom: var(--spacing-xl);" data-i18n="section_services">**Layanan & Harga**</h2>
+            <div class="section-content">
+                
+                <!-- Servis Laptop -->
+                <div class="service-category">
+                    <h3 class="heading-md service-category-title" data-i18n="cat_laptop">[+] Servis Laptop</h3>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="lap_win">Install Ulang Windows</span>
+                            <span class="list-row-price">40K</span>
+                        </div>
+                    </div>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="lap_opt">Optimisasi / Custom OS</span>
+                            <span class="list-row-price">40K</span>
+                        </div>
+                    </div>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="lap_soft">Install Software</span>
+                            <span class="list-row-price" data-i18n="price_start">Mulai 5K</span>
+                        </div>
                     </div>
                 </div>
-                <div class="service-item interactive-el">
-                    <span class="service-name">Flashing (Bootloop)</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price">50K</span>
+
+                <!-- Oprek Android -->
+                <div class="service-category">
+                    <h3 class="heading-md service-category-title" data-i18n="cat_android">[+] Oprek Android</h3>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="and_rom">Custom ROM + Root</span>
+                            <span class="list-row-price">50K</span>
+                        </div>
+                    </div>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="and_flash">Flashing (Bootloop)</span>
+                            <span class="list-row-price">50K</span>
+                        </div>
+                    </div>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="and_reinstall">Install Ulang HP</span>
+                            <span class="list-row-price">35K</span>
+                        </div>
                     </div>
                 </div>
-                <div class="service-item interactive-el">
-                    <span class="service-name">Install Ulang HP</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price">35K</span>
+
+                <!-- Hardware -->
+                <div class="service-category" id="hardware-category">
+                    <h3 class="heading-md service-category-title" data-i18n="cat_hard">[+] Hardware</h3>
+                    <div class="tab-strip">
+                        <button class="button-tab active" id="tab-tanpa-ongkir" data-i18n="hard_no_ship">Belum Ongkir</button>
+                        <button class="button-tab" id="tab-dengan-ongkir" data-i18n="hard_with_ship">Termasuk Ongkir (+12K)</button>
+                    </div>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="hard_lcd">Ganti LCD</span>
+                            <span class="list-row-price" data-base="35">35K</span>
+                        </div>
+                    </div>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="hard_bat">Ganti Baterai</span>
+                            <span class="list-row-price" data-base="25">25K</span>
+                        </div>
+                    </div>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="hard_glue">Lem LCD</span>
+                            <span class="list-row-price" data-base="25">25K</span>
+                        </div>
+                    </div>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="hard_btn">Servis Tombol / FP</span>
+                            <span class="list-row-price" data-base="15">15K</span>
+                        </div>
+                    </div>
+                    <div class="service-note body-md" data-i18n="note_hard">
+                        <span class="body-strong">Catatan:</span> Anda dapat membawa sparepart sendiri atau kami bantu sediakan. Harga sparepart transparan beserta nota asli (ongkir 12k).
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ============================
-         SECTION 3: HARDWARE
-         ============================ -->
-    <section class="section" id="hardware">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-number">03</div>
-                <div class="section-tag">Repair</div>
-                <h2 class="section-title">Hardware</h2>
-            </div>
-
-            <div class="service-list reveal reveal-stagger">
-                <div class="service-item interactive-el">
-                    <span class="service-name">Ganti LCD</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price">35K</span>
+                <!-- Web Development -->
+                <div class="service-category">
+                    <h3 class="heading-md service-category-title" data-i18n="cat_web">[+] Pembuatan Website</h3>
+                    <div class="list-row body-md">
+                        <span class="list-row-marker">[-]</span>
+                        <div class="list-row-inner">
+                            <span class="list-row-title" data-i18n="web_dev">Jasa Pembuatan Website</span>
+                            <span class="list-row-price"><a href="https://wa.me/62895384661641?text=Halo%20min,%20mau%20tanya%20tentang%20jasa%20pembuatan%20website" class="link-inline" data-i18n="web_ask">Tanya via WA</a></span>
+                        </div>
+                    </div>
+                    <div class="service-note body-md" data-i18n="note_web">
+                        <span class="body-strong">Catatan:</span> Cocok untuk landing page, portofolio, tugas, atau profil UMKM. Harga dan waktu pengerjaan bervariasi.
                     </div>
                 </div>
-                <div class="service-item interactive-el">
-                    <span class="service-name">Ganti Baterai</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price">25K</span>
-                    </div>
-                </div>
-                <div class="service-item interactive-el">
-                    <span class="service-name">Lem LCD</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price">25K</span>
-                    </div>
-                </div>
-                <div class="service-item interactive-el">
-                    <span class="service-name">Servis Tombol / FP</span>
-                    <div class="service-price-wrapper">
-                        <span class="service-price">15K</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="section-note reveal">
-                <strong>Catatan:</strong> Anda dapat membawa <i>sparepart</i> sendiri (LCD, baterai, dll) atau kami bantu sediakan. Harga <i>sparepart</i> akan diinfokan secara transparan beserta nota asli pembelian (dikenakan biaya ongkir 12k).
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ============================
-         SECTION 4: WEB DEV
-         ============================ -->
-    <section class="section section--alt" id="webdev">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-number">04</div>
-                <div class="section-tag">Code</div>
-                <h2 class="section-title">Web Development</h2>
-            </div>
-
-            <div class="service-list reveal reveal-stagger">
-                <div class="service-item interactive-el">
-                    <span class="service-name">Jasa Pembuatan Website</span>
-                    <div class="service-price-wrapper">
-                        <a href="https://wa.me/62895384661641?text=Halo%20min,%20mau%20tanya%20tentang%20jasa%20pembuatan%20website" target="_blank" rel="noopener" class="service-price" style="font-size: clamp(0.9rem, 2vw, 1.2rem); text-decoration: none; border: 1px solid rgba(40, 84, 48, 0.2); padding: 0.4rem 1.2rem; border-radius: 100px; display: inline-flex; align-items: center; gap: 0.6rem; color: var(--accent);">
-                            <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;">
-                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                            </svg>
-                            Tanya via WA
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section-note reveal">
-                <strong>Catatan:</strong> Cocok untuk landing page, portofolio, tugas, atau profil UMKM. Harga dan waktu pengerjaan bervariasi tergantung tingkat kerumitan.
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================
-         SECTION 5: LOCATION
-         ============================ -->
-    <section class="section" id="location">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-number">05</div>
-                <div class="section-tag">Find Us</div>
-                <h2 class="section-title">Lokasi Kami</h2>
-            </div>
-
-            <div class="location-card reveal">
-                <div class="location-map">
+        <!-- Location -->
+        <section id="location">
+            <h2 class="heading-md" data-i18n="section_location">**Lokasi Kami**</h2>
+            <div class="section-content">
+                <p class="body-md" data-i18n="loc_open">Buka tiap hari</p>
+                <div class="map-container">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d987.2!2d112.6134328!3d-8.0074546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e789d1df673bb11%3A0x511d74492e760a78!2sLutzzServis!5e0!3m2!1sid!2sid!4v1710927000000"
-                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Google Maps Location">
                     </iframe>
                 </div>
-                <div class="location-info">
-                    <div class="location-text">
-                        <h3>📍 LutzzServis</h3>
-                        <p>Buka tiap hari &mdash; Klik tombol untuk navigasi</p>
-                    </div>
-                    <a href="https://maps.app.goo.gl/CuTafUQtTVMA4ZUL7" target="_blank" rel="noopener"
-                        class="location-btn interactive-el" aria-label="Buka lokasi toko di Google Maps">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                        </svg>
-                        <span>Buka Google Maps</span>
-                    </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="contact" class="footer-section">
+            <div class="footer-grid caption-md">
+                <a href="https://wa.me/62895384661641">WhatsApp [0895384661641]</a>
+                <a href="https://maps.app.goo.gl/n2VoZCYYVF5hRJce9">Google Maps</a>
+                <a href="https://www.instagram.com/just_360p" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=100073770163510" target="_blank" rel="noopener">Facebook</a>
+                <a href="#hero" data-i18n="foot_top">Kembali ke Atas</a>
+            </div>
+            <div class="footer-bottom caption-md">
+                <div>©2026 LutzzServis</div>
+                <div class="footer-bottom-links">
+                    <a href="#" data-i18n="foot_priv">Privasi</a>
+                    <a href="#" data-i18n="foot_term">Ketentuan</a>
+                    <button class="lang-btn caption-md" id="foot-lang-toggle" onclick="toggleLanguage()">Indonesia ▼</button>
                 </div>
             </div>
-        </div>
-    </section>
+        </footer>
+    </div>
 
-    <!-- ============================
-         FOOTER / CONTACT
-         ============================ -->
-    <footer class="footer" id="contact">
-        <div class="footer-inner reveal">
-            <div class="footer-guarantee">
-                <div class="icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
-                    </svg>
-                </div>
-                <span>Garansi 1/2 Bulan</span>
-            </div>
-
-            <h2 class="footer-heading">Butuh Bantuan?</h2>
-            <p class="footer-sub">Hubungi kami via WhatsApp atau kunjungi langsung</p>
-
-            <div class="cta-group">
-                <a href="https://wa.me/62895384661641" class="cta-btn interactive-el" id="ctaBtn"
-                    aria-label="Chat WhatsApp 0895384661641">
-                    <div class="btn-bg"></div>
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                    </svg>
-                    <span>0895384661641</span>
-                </a>
-
-                <a href="https://maps.app.goo.gl/CuTafUQtTVMA4ZUL7" target="_blank" rel="noopener"
-                    class="cta-btn--outline interactive-el" aria-label="Buka lokasi di Google Maps">
-                    <div class="btn-bg"></div>
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                    </svg>
-                    <span>Google Maps</span>
-                </a>
-            </div>
-
-            <p class="footer-hours">Buka Tiap Hari</p>
-
-            <p class="footer-bottom">&copy; <span id="copyright-year">2026</span> &mdash; LutzzServis</p>
-        </div>
-    </footer>
-
-    <!-- ============================
-         SCRIPTS
-         ============================ -->
     <script>
+        const i18n = {
+            id: {
+                nav_home: "Beranda",
+                nav_services: "Layanan",
+                nav_location: "Lokasi",
+                nav_contact: "Kontak",
+                nav_call: "Hubungi",
+                hero_subtitle: "Melayani Servis Laptop, Oprek Android, Perbaikan Perangkat Keras & Pembuatan Website dengan Kualitas Terbaik.",
+                hero_cmd: "Selamat datang di LutzzServis",
+                btn_price: "[ Harga ]",
+                btn_wa: "[ WA ]",
+                section_services: "**Layanan & Harga**",
+                cat_laptop: "[+] Servis Laptop",
+                lap_win: "Install Ulang Windows",
+                lap_opt: "Optimisasi / Custom OS",
+                lap_soft: "Install Software",
+                price_start: "Mulai 5K",
+                cat_android: "[+] Oprek Android",
+                and_rom: "Custom ROM + Root",
+                and_flash: "Flashing (Bootloop)",
+                and_reinstall: "Install Ulang HP",
+                cat_hard: "[+] Hardware",
+                hard_no_ship: "Belum Ongkir",
+                hard_with_ship: "Termasuk Ongkir (+12K)",
+                hard_lcd: "Ganti LCD",
+                hard_bat: "Ganti Baterai",
+                hard_glue: "Lem LCD",
+                hard_btn: "Servis Tombol / FP",
+                note_hard: '<span class="body-strong">Catatan:</span> Anda dapat membawa sparepart sendiri atau kami bantu sediakan. Harga sparepart transparan beserta nota asli (ongkir 12k).',
+                cat_web: "[+] Pembuatan Website",
+                web_dev: "Jasa Pembuatan Website",
+                web_ask: "Tanya via WA",
+                note_web: '<span class="body-strong">Catatan:</span> Cocok untuk landing page, portofolio, tugas, atau profil UMKM. Harga dan waktu pengerjaan bervariasi.',
+                section_location: "**Lokasi Kami**",
+                loc_open: "Buka tiap hari",
+                foot_top: "Kembali ke Atas",
+                foot_priv: "Privasi",
+                foot_term: "Ketentuan",
+                nav_lang: "EN",
+                foot_lang: "Indonesia ▼"
+            },
+            en: {
+                nav_home: "Home",
+                nav_services: "Services",
+                nav_location: "Location",
+                nav_contact: "Contact",
+                nav_call: "Contact Us",
+                hero_subtitle: "Providing Laptop Repair, Android Modding, Hardware Repair & Website Development with the Best Quality.",
+                hero_cmd: "Welcome to LutzzServis",
+                btn_price: "[ Prices ]",
+                btn_wa: "[ WA ]",
+                section_services: "**Services & Pricing**",
+                cat_laptop: "[+] Laptop Services",
+                lap_win: "Windows Reinstall",
+                lap_opt: "Optimization / Custom OS",
+                lap_soft: "Software Installation",
+                price_start: "Starts at 5K",
+                cat_android: "[+] Android Modding",
+                and_rom: "Custom ROM + Root",
+                and_flash: "Flashing (Bootloop)",
+                and_reinstall: "Phone Reinstall",
+                cat_hard: "[+] Hardware",
+                hard_no_ship: "Without Shipping",
+                hard_with_ship: "With Shipping (+12K)",
+                hard_lcd: "LCD Replacement",
+                hard_bat: "Battery Replacement",
+                hard_glue: "LCD Regluing",
+                hard_btn: "Button / FP Repair",
+                note_hard: '<span class="body-strong">Note:</span> You can bring your own spare parts or we can help provide them. Spare part prices are transparent with original receipt (12k shipping).',
+                cat_web: "[+] Website Development",
+                web_dev: "Website Development Service",
+                web_ask: "Ask via WA",
+                note_web: '<span class="body-strong">Note:</span> Suitable for landing pages, portfolios, assignments, or MSME profiles. Prices and processing times vary.',
+                section_location: "**Our Location**",
+                loc_open: "Open every day",
+                foot_top: "Back to Top",
+                foot_priv: "Privacy",
+                foot_term: "Terms",
+                nav_lang: "ID",
+                foot_lang: "English ▼"
+            }
+        };
+
+        let currentLang = 'id';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            document.documentElement.lang = currentLang;
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) {
+                    el.innerHTML = i18n[currentLang][key];
+                }
+            });
+
+            document.getElementById('nav-lang-toggle').innerText = i18n[currentLang].nav_lang;
+            document.getElementById('foot-lang-toggle').innerText = i18n[currentLang].foot_lang;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
 
-            /* ---- Custom Cursor ---- */
-            const dot = document.getElementById('cursor-dot');
-            const ring = document.getElementById('cursor-ring');
-            const interactives = document.querySelectorAll('.interactive-el');
-
-            const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia("(pointer: coarse)").matches);
-            if (isTouch) {
-                dot.style.display = 'none';
-                ring.style.display = 'none';
-            } else {
-                let mx = innerWidth / 2, my = innerHeight / 2;
-                let dx = mx, dy = my, rx = mx, ry = my;
-
-                document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-                (function render() {
-                    dx += (mx - dx);
-                    dy += (my - dy);
-                    rx += (mx - rx) * 0.15;
-                    ry += (my - ry) * 0.15;
-
-                    dot.style.transform = `translate3d(${dx}px,${dy}px,0) translate(-50%,-50%)`;
-                    ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
-                    requestAnimationFrame(render);
-                })();
-
-                interactives.forEach(el => {
-                    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-                    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    if (navLinks.classList.contains('active')) {
+                        menuBtn.innerText = '[ x Tutup ]';
+                    } else {
+                        menuBtn.innerText = '[ Menu ]';
+                    }
                 });
 
-                document.addEventListener('mouseout', e => {
-                    if (!e.relatedTarget) { dot.style.opacity = 0; ring.style.opacity = 0; }
+                navLinks.querySelectorAll('a, button:not(.lang-btn)').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuBtn.innerText = '[ Menu ]';
+                    });
                 });
-                document.addEventListener('mouseover', () => { dot.style.opacity = 1; ring.style.opacity = 1; });
             }
 
-            /* ---- Scroll Reveal ---- */
-            const reveals = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('revealed');
-                    }
+            // Toggle Ongkir Logic
+            const tabTanpaOngkir = document.getElementById('tab-tanpa-ongkir');
+            const tabDenganOngkir = document.getElementById('tab-dengan-ongkir');
+            if (tabTanpaOngkir && tabDenganOngkir) {
+                const hardwareCategory = document.getElementById('hardware-category');
+                const priceElements = hardwareCategory.querySelectorAll('.list-row-price[data-base]');
+                
+                const updatePrices = (ongkir) => {
+                    priceElements.forEach(el => {
+                        const base = parseInt(el.getAttribute('data-base'));
+                        el.innerText = (base + (ongkir ? 12 : 0)) + 'K';
+                    });
+                };
+
+                tabTanpaOngkir.addEventListener('click', () => {
+                    tabTanpaOngkir.classList.add('active');
+                    tabDenganOngkir.classList.remove('active');
+                    updatePrices(false);
                 });
-            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
-            reveals.forEach(el => observer.observe(el));
-
-            /* ---- Side Nav Active State ---- */
-            const navLinks = document.querySelectorAll('.side-nav a');
-            const sections = document.querySelectorAll('section, footer');
-
-            const navObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.id;
-                        navLinks.forEach(link => {
-                            link.classList.toggle('active', link.getAttribute('data-section') === id);
-                        });
-                    }
+                tabDenganOngkir.addEventListener('click', () => {
+                    tabDenganOngkir.classList.add('active');
+                    tabTanpaOngkir.classList.remove('active');
+                    updatePrices(true);
                 });
-            }, { threshold: 0.35 });
-
-            sections.forEach(sec => navObserver.observe(sec));
-
-            /* ---- Dynamic Copyright Year ---- */
-            const yearEl = document.getElementById('copyright-year');
-            if (yearEl) yearEl.textContent = new Date().getFullYear();
+            }
         });
     </script>
 </body>
-
 </html>
