@@ -240,12 +240,7 @@
         /* Hero */
         .hero-wrapper {
             background-color: var(--colors-surface-dark);
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
+            width: 100%;
             display: flex;
             justify-content: center;
             margin-bottom: var(--spacing-section);
@@ -296,7 +291,12 @@
             border-radius: var(--rounded-sm);
             margin-bottom: var(--spacing-xxl);
             display: inline-block;
+            max-width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
         }
+        .tui-prompt-row::-webkit-scrollbar { display: none; }
         
         .tui-prompt-row span {
             color: var(--colors-success);
@@ -420,8 +420,8 @@
                 display: none;
                 position: absolute;
                 top: 56px;
-                left: 0;
-                right: 0;
+                left: calc(-1 * var(--spacing-xl));
+                right: calc(-1 * var(--spacing-xl));
                 background: var(--colors-canvas);
                 flex-direction: column;
                 padding: var(--spacing-xl);
@@ -485,32 +485,34 @@
             </div>
             <button class="mobile-menu-btn body-strong" aria-label="Toggle Menu" id="mobile-menu-btn">[ Menu ]</button>
         </nav>
+    </div>
 
-        <!-- Hero TUI Mockup -->
-        <div class="hero-wrapper">
-            <div id="hero" class="hero-tui-mockup">
-                <div class="hero-title-container">
-                    <h1 class="hero-title display-xl">
+    <!-- Hero TUI Mockup -->
+    <div class="hero-wrapper">
+        <div id="hero" class="hero-tui-mockup">
+            <div class="hero-title-container">
+                <h1 class="hero-title display-xl">
 _     _   _ _____ __________ ____  _____ ______     _____ ____  
 | |   | | | |_   _|__  /__  // ___|| ____|  _ \ \   / /_ _/ ___| 
 | |   | | | | | |   / /  / / \___ \|  _| | |_) \ \ / / | |\___ \ 
 | |___| |_| | | |  / /_ / /_  ___) | |___|  _ < \ V /  | | ___) |
 |_____|\___/  |_| /____/____||____/|_____|_| \_\ \_/  |___|____/ 
-                    </h1>
-                </div>
-                <p class="hero-subtitle body-md" data-i18n="hero_subtitle">
-                    Melayani Servis Laptop, Oprek Android, Perbaikan Perangkat Keras & Pembuatan Website dengan Kualitas Terbaik.
-                </p>
-                <div class="tui-prompt-row body-md">
-                    &gt;&gt;&gt; print("<span data-i18n="hero_cmd">Selamat datang di LutzzServis</span>")
-                </div>
-                <div class="hero-actions" style="display: flex; gap: 12px; margin-bottom: 32px;">
-                    <a href="#services" class="btn-secondary button-md" style="background: transparent; color: var(--colors-canvas) !important; border-color: var(--colors-canvas);" data-i18n="btn_price">[ Harga ]</a>
-                    <a href="https://wa.me/62895384661641" class="btn-primary button-md" style="background: var(--colors-canvas); color: var(--colors-ink) !important;" data-i18n="btn_wa">[ WA ]</a>
-                </div>
+                </h1>
+            </div>
+            <p class="hero-subtitle body-md" data-i18n="hero_subtitle">
+                Melayani Servis Laptop, Oprek Android, Perbaikan Perangkat Keras & Pembuatan Website dengan Kualitas Terbaik.
+            </p>
+            <div class="tui-prompt-row body-md">
+                &gt;&gt;&gt; print("<span data-i18n="hero_cmd">Selamat datang di LutzzServis</span>")
+            </div>
+            <div class="hero-actions" style="display: flex; gap: 12px; margin-bottom: 32px;">
+                <a href="#services" class="btn-secondary button-md" style="background: transparent; color: var(--colors-canvas) !important; border-color: var(--colors-canvas);" data-i18n="btn_price">[ Harga ]</a>
+                <a href="https://wa.me/62895384661641" class="btn-primary button-md" style="background: var(--colors-canvas); color: var(--colors-ink) !important;" data-i18n="btn_wa">[ WA ]</a>
             </div>
         </div>
+    </div>
 
+    <div class="container">
         <!-- Services -->
         <section id="services">
             <h2 class="heading-md" style="margin-bottom: var(--spacing-xl);" data-i18n="section_services">**Layanan & Harga**</h2>
