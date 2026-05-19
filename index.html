@@ -1,218 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LutzzServis — Software & Hardware Pricelist</title>
-    <!-- [ignoring loop detection] -->
-    <meta name="description" content="Jasa install ulang Windows, custom ROM Android, ganti LCD, baterai & servis hardware lainnya. Harga terjangkau, garansi 1/2 bulan. Buka tiap hari.">
-    <meta name="keywords" content="servis laptop, install ulang, custom ROM, ganti LCD, ganti baterai, servis HP, LutzzServis">
-    <meta property="og:title" content="LutzzServis — Software & Hardware Pricelist">
-    <meta property="og:description" content="Jasa servis laptop & HP terjangkau. Install ulang, custom ROM, ganti LCD, dan lainnya. Garansi 1/2 bulan.">
-    <meta property="og:type" content="website">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LutzzServis — Software &amp; Hardware Pricelist</title>
+  <!-- [ignoring loop detection] -->
+  <meta name="description" content="Jasa install ulang Windows, custom ROM Android, ganti LCD, baterai &amp; servis hardware lainnya. Harga terjangkau, garansi 1/2 bulan. Buka tiap hari.">
+  <meta name="keywords" content="servis laptop, install ulang, custom ROM, ganti LCD, ganti baterai, servis HP, LutzzServis">
+  <meta property="og:title" content="LutzzServis — Software &amp; Hardware Pricelist">
+  <meta property="og:description" content="Jasa servis laptop &amp; HP terjangkau. Install ulang, custom ROM, ganti LCD, dan lainnya. Garansi 1/2 bulan.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
 
-    <!-- JetBrains Mono Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- External CSS -->
-    <link rel="stylesheet" href="style.css">
+  <!-- JetBrains Mono (Berkeley Mono fallback per design.md) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <!-- Navbar -->
-        <nav class="primary-nav">
-            <a href="#hero" class="wordmark">LUTZZSERVIS</a>
-            <div class="nav-links">
-                <a href="#hero" class="body-strong" data-i18n="nav_home">Beranda</a>
-                <a href="#services" class="body-strong" data-i18n="nav_services">Layanan</a>
-                <a href="#location" class="body-strong" data-i18n="nav_location">Lokasi</a>
-                <a href="#contact" class="body-strong" data-i18n="nav_contact">Kontak</a>
-                <a href="https://wa.me/62895384661641" class="btn-primary button-md" data-i18n="nav_call">Hubungi</a>
-                <button class="lang-btn body-strong" id="nav-lang-toggle" onclick="toggleLanguage()">EN</button>
-            </div>
-            <button class="mobile-menu-btn body-strong" aria-label="Toggle Menu" id="mobile-menu-btn">[ Menu ]</button>
-        </nav>
-    </div>
-
-    <!-- Hero TUI Mockup -->
-    <div class="hero-wrapper">
-        <div id="hero" class="hero-tui-mockup">
-            <div class="hero-title-container">
-                <h1 class="hero-title display-xl">
-_     _   _ _____ __________ ____  _____ ______     _____ ____  
-| |   | | | |_   _|__  /__  // ___|| ____|  _ \ \   / /_ _/ ___| 
-| |   | | | | | |   / /  / / \___ \|  _| | |_) \ \ / / | |\___ \ 
-| |___| |_| | | |  / /_ / /_  ___) | |___|  _ < \ V /  | | ___) |
-|_____|\___/  |_| /____/____||____/|_____|_| \_\ \_/  |___|____/ 
-                </h1>
-            </div>
-            <p class="hero-subtitle body-md" data-i18n="hero_subtitle">
-                Melayani Servis Laptop, Oprek Android, Perbaikan Perangkat Keras & Pembuatan Website dengan Kualitas Terbaik.
-            </p>
-            <div class="tui-prompt-row body-md">
-                &gt;&gt;&gt; print("<span data-i18n="hero_cmd">Selamat datang di LutzzServis</span>")
-            </div>
-            <div class="hero-actions" style="display: flex; gap: 12px; margin-bottom: 32px;">
-                <a href="#services" class="btn-secondary button-md" style="background: transparent; color: var(--colors-canvas) !important; border-color: var(--colors-canvas);" data-i18n="btn_price">[ Harga ]</a>
-                <a href="https://wa.me/62895384661641" class="btn-primary button-md" style="background: var(--colors-canvas); color: var(--colors-ink) !important;" data-i18n="btn_wa">[ WA ]</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <!-- Services -->
-        <section id="services">
-            <h2 class="heading-md" style="margin-bottom: var(--spacing-xl);" data-i18n="section_services">**Layanan & Harga**</h2>
-            <div class="section-content">
-                
-                <!-- Servis Laptop -->
-                <div class="service-category">
-                    <h3 class="heading-md service-category-title" data-i18n="cat_laptop">[+] Servis Laptop</h3>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="lap_win">Install Ulang Windows</span>
-                            <span class="list-row-price">40K</span>
-                        </div>
-                    </div>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="lap_opt">Optimisasi / Custom OS</span>
-                            <span class="list-row-price">40K</span>
-                        </div>
-                    </div>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="lap_soft">Install Software</span>
-                            <span class="list-row-price" data-i18n="price_start">Mulai 5K</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Oprek Android -->
-                <div class="service-category">
-                    <h3 class="heading-md service-category-title" data-i18n="cat_android">[+] Oprek Android</h3>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="and_rom">Custom ROM + Root</span>
-                            <span class="list-row-price">50K</span>
-                        </div>
-                    </div>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="and_flash">Flashing (Bootloop)</span>
-                            <span class="list-row-price">50K</span>
-                        </div>
-                    </div>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="and_reinstall">Install Ulang HP</span>
-                            <span class="list-row-price">35K</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hardware -->
-                <div class="service-category" id="hardware-category">
-                    <h3 class="heading-md service-category-title" data-i18n="cat_hard">[+] Hardware</h3>
-                    <div class="tab-strip">
-                        <button class="button-tab active" id="tab-tanpa-ongkir" data-i18n="hard_no_ship">Belum Ongkir</button>
-                        <button class="button-tab" id="tab-dengan-ongkir" data-i18n="hard_with_ship">Termasuk Ongkir (+12K)</button>
-                    </div>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="hard_lcd">Ganti LCD</span>
-                            <span class="list-row-price" data-base="35">35K</span>
-                        </div>
-                    </div>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="hard_bat">Ganti Baterai</span>
-                            <span class="list-row-price" data-base="25">25K</span>
-                        </div>
-                    </div>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="hard_glue">Lem LCD</span>
-                            <span class="list-row-price" data-base="25">25K</span>
-                        </div>
-                    </div>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="hard_btn">Servis Tombol / FP</span>
-                            <span class="list-row-price" data-base="15">15K</span>
-                        </div>
-                    </div>
-                    <div class="service-note body-md" data-i18n="note_hard">
-                        <span class="body-strong">Catatan:</span> Anda dapat membawa sparepart sendiri atau kami bantu sediakan. Harga sparepart transparan beserta nota asli (ongkir 12k).
-                    </div>
-                </div>
-
-                <!-- Web Development -->
-                <div class="service-category">
-                    <h3 class="heading-md service-category-title" data-i18n="cat_web">[+] Pembuatan Website</h3>
-                    <div class="list-row body-md">
-                        <span class="list-row-marker">[-]</span>
-                        <div class="list-row-inner">
-                            <span class="list-row-title" data-i18n="web_dev">Jasa Pembuatan Website</span>
-                            <span class="list-row-price"><a href="https://wa.me/62895384661641?text=Halo%20min,%20mau%20tanya%20tentang%20jasa%20pembuatan%20website" class="link-inline" data-i18n="web_ask">Tanya via WA</a></span>
-                        </div>
-                    </div>
-                    <div class="service-note body-md" data-i18n="note_web">
-                        <span class="body-strong">Catatan:</span> Cocok untuk landing page, portofolio, tugas, atau profil UMKM. Harga dan waktu pengerjaan bervariasi.
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Location -->
-        <section id="location">
-            <h2 class="heading-md" data-i18n="section_location">**Lokasi Kami**</h2>
-            <div class="section-content">
-                <p class="body-md" data-i18n="loc_open">Buka tiap hari</p>
-                <div class="map-container">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d987.2!2d112.6134328!3d-8.0074546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e789d1df673bb11%3A0x511d74492e760a78!2sLutzzServis!5e0!3m2!1sid!2sid!4v1710927000000"
-                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Google Maps Location">
-                    </iframe>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer id="contact" class="footer-section">
-            <div class="footer-grid caption-md">
-                <a href="https://wa.me/62895384661641">WhatsApp [0895384661641]</a>
-                <a href="https://maps.app.goo.gl/n2VoZCYYVF5hRJce9">Google Maps</a>
-                <a href="https://www.instagram.com/just_360p" target="_blank" rel="noopener">Instagram</a>
-                <a href="https://www.facebook.com/profile.php?id=100073770163510" target="_blank" rel="noopener">Facebook</a>
-                <a href="#hero" data-i18n="foot_top">Kembali ke Atas</a>
-            </div>
-            <div class="footer-bottom caption-md">
-                <div>©2026 LutzzServis</div>
-                <div class="footer-bottom-links">
-                    <a href="#" data-i18n="foot_priv">Privasi</a>
-                    <a href="#" data-i18n="foot_term">Ketentuan</a>
-                    <button class="lang-btn caption-md" id="foot-lang-toggle" onclick="toggleLanguage()">Indonesia ▼</button>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- External JS -->
-    <script src="script.js"></script>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>

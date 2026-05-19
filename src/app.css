@@ -1,0 +1,310 @@
+/* ============================================================
+   LutzzServis — Global Design System
+   Based strictly on design.md (OpenCode TUI aesthetic)
+   Font: JetBrains Mono (Berkeley Mono fallback per spec)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ── CSS Tokens ─────────────────────────────────────────── */
+:root {
+  /* Colors — Brand & Surface */
+  --colors-canvas:               #fdfcfc;
+  --colors-ink:                  #201d1d;
+  --colors-ink-deep:             #0f0000;
+  --colors-surface-soft:         #f8f7f7;
+  --colors-surface-card:         #f1eeee;
+  --colors-surface-dark:         #201d1d;
+  --colors-surface-dark-elevated:#302c2c;
+  --colors-hairline:             rgba(15,0,0,0.12);
+  --colors-hairline-strong:      #646262;
+
+  /* Colors — Text */
+  --colors-charcoal:             #302c2c;
+  --colors-body:                 #424245;
+  --colors-mute:                 #646262;
+  --colors-stone:                #6e6e73;
+  --colors-ash:                  #9a9898;
+
+  /* Colors — Semantic (TUI only, per design.md) */
+  --colors-accent:               #007aff;
+  --colors-accent-hover:         #0056b3;
+  --colors-accent-active:        #004085;
+  --colors-danger:               #ff3b30;
+  --colors-danger-hover:         #d70015;
+  --colors-danger-active:        #a50011;
+  --colors-warning:              #ff9f0a;
+  --colors-warning-hover:        #cc7f08;
+  --colors-warning-active:       #995f06;
+  --colors-success:              #30d158;
+
+  /* Colors — On-surface aliases */
+  --colors-primary:              var(--colors-ink);
+  --colors-on-primary:           var(--colors-canvas);
+  --colors-on-dark:              var(--colors-canvas);
+
+  /* Typography — 100% monospace, no sans-serif */
+  --font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace,
+                 SFMono-Regular, Menlo, Monaco, Consolas,
+                 'Liberation Mono', 'Courier New', monospace;
+
+  /* Spacing */
+  --spacing-xxs:     1px;
+  --spacing-xs:      4px;
+  --spacing-sm:      8px;
+  --spacing-md:      12px;
+  --spacing-lg:      16px;
+  --spacing-xl:      24px;
+  --spacing-xxl:     32px;
+  --spacing-section: 96px;
+
+  /* Border Radius */
+  --rounded-none: 0px;
+  --rounded-sm:   4px;
+  --rounded-full: 9999px;
+}
+
+/* ── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--colors-canvas);
+  color: var(--colors-body);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── Typography Utilities ───────────────────────────────── */
+/* display-xl: 38px / 700 — Hero headline only */
+.display-xl {
+  font-family: var(--font-family);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--colors-ink);
+}
+
+/* heading-md: 16px / 700 — Section labels */
+.heading-md {
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--colors-ink);
+}
+
+/* body-md: 16px / 400 — Default paragraph */
+.body-md {
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+/* body-strong: 16px / 500 — Inline emphasis, nav links */
+.body-strong {
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--colors-ink);
+}
+
+/* body-tight: 16px / 500 / lh:1 — Compact label */
+.body-tight {
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* button-md: 16px / 500 / lh:2 — All button labels */
+.button-md {
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2;
+  letter-spacing: 0;
+}
+
+/* caption-md: 14px / 400 / lh:2 — Footer, badges */
+.caption-md {
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2;
+  letter-spacing: 0;
+}
+
+/* ── Layout Container ───────────────────────────────────── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+}
+@media (max-width: 480px) {
+  .container { padding: 0 var(--spacing-lg); }
+}
+
+/* ── Buttons ────────────────────────────────────────────── */
+/* button-primary: ink fill, canvas text, 4px radius */
+.btn-primary {
+  background-color: var(--colors-ink);
+  color: var(--colors-canvas) !important;
+  padding: 4px 20px;
+  border-radius: var(--rounded-sm);
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2;
+  min-height: 44px;    /* mobile tap target */
+  transition: background-color 0.15s;
+}
+.btn-primary:active {
+  background-color: var(--colors-ink-deep);
+}
+
+/* button-secondary: outlined */
+.btn-secondary {
+  background-color: var(--colors-canvas);
+  color: var(--colors-ink) !important;
+  padding: 4px 20px;
+  border-radius: var(--rounded-sm);
+  border: 1px solid var(--colors-hairline-strong);
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2;
+  min-height: 44px;    /* mobile tap target */
+}
+
+/* button-tab */
+.button-tab {
+  background: transparent;
+  color: var(--colors-mute);
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--rounded-none);
+  cursor: pointer;
+  line-height: 2;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+.button-tab.active {
+  color: var(--colors-ink);
+  border-bottom-color: var(--colors-ash);
+}
+
+/* lang-btn */
+.lang-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-family);
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  color: inherit;
+}
+
+/* ── Sections ───────────────────────────────────────────── */
+section {
+  margin-bottom: var(--spacing-section);
+  padding-bottom: var(--spacing-section);
+  border-bottom: 1px solid var(--colors-hairline);
+}
+section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Mobile: lebih compact */
+@media (max-width: 768px) {
+  section {
+    margin-bottom: var(--spacing-xxl);
+    padding-bottom: var(--spacing-xxl);
+  }
+}
+
+.section-content {
+  padding: var(--spacing-lg) 0;
+}
+
+/* ── Link inline ────────────────────────────────────────── */
+.link-inline {
+  color: var(--colors-ink);
+  text-decoration: underline;
+}
+
+/* ── Scrollbar hide utility ─────────────────────────────── */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── Custom cursor (hide default on non-touch) ──────────── */
+@media (pointer: fine) {
+  html, body { cursor: none; }
+  a, button, [role="button"] { cursor: none; }
+}
+
+/* ── clip-path will-change hint for scramble headings ───── */
+h2, h3 { will-change: clip-path; }
+
+/* ── ServiceRow hover — subtle background tint ──────────── */
+.list-row {
+  transition: background-color 0.15s;
+}
+.list-row:hover {
+  background-color: var(--colors-surface-soft);
+}
+
+/* ── Button active press feedback ───────────────────────── */
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+/* ── Clip-path on headings for reveal animations ─────────── */
+h2 { clip-path: inset(0 0 0 0); }
+
+/* ── Mobile section rhythm tighten ──────────────────────── */
+@media (max-width: 768px) {
+  :root { --spacing-section: 64px; }
+}
+@media (max-width: 480px) {
+  :root { --spacing-section: 48px; }
+}
